@@ -1,29 +1,20 @@
-/*:
-	@module-configuration:
-		{
-			"moduleName": "argumentsToArray",
-			"authorName": "Richeve S. Bebedor",
-			"isGlobal": true
-		}
-	@end-module-configuration
-*/
+try{ var base = window; }catch( error ){ var base = exports; }
+( function module( base ){
+	define( "argumentsToArray",
+		function construct( ){
+			var argumentsToArray = function argumentsToArray( parameters ){
+				//ES5 compatible solution.
+				if( "slice" in parameters 
+					|| typeof parameters.slice == "function" )
+				{
+					return parameters.slice( );
+				}
 
-argumentsToArray = function argumentsToArray( parameters ){
-	/*
-		@meta-configuration:
-			{
-				"parameters": "Arguments"
-			}
-		@end-meta-configuration
-	*/
+				//General fallback.
+				return Array.prototype.slice.apply( parameters );
+			};
 
-	//ES5 compatible solution.
-	if( "slice" in parameters 
-		|| typeof parameters.slice == "function" )
-	{
-		return parameters.slice( );
-	}
+			base.argumentsToArray = argumentsToArray;
+		} );
+} )( base );
 
-	//General fallback.
-	return Array.prototype.slice.apply( parameters );
-};
